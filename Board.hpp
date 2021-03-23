@@ -12,10 +12,10 @@ namespace ariel {
         uint min_column;
         std::unordered_map<size_t, char> chars;
     public:
-        Board():max_row(0), max_column(0), min_row(-1), min_column(-1){}
+        Board():max_row(0), max_column(0), min_row((uint)-1), min_column((uint)-1){}
         ~Board() { }
-        void post(int row, int column, Direction direction, std::string message);
-        std::string read(int row, int column, Direction direction, int length);
+        void post(uint row, uint column, Direction direction, std::string message);
+        std::string read(uint row, uint column, Direction direction, uint length);
         void show();
     };
 }

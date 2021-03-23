@@ -1,12 +1,8 @@
 /**
- * An example of how to write unit tests.
- * Use this as a basis to build a more complete Test.cpp file.
- * 
- * IMPORTANT: Please write more tests - the tests here are only for example and are not complete.
  *
  * AUTHORS: <achiya zigler>
  * 
- * Date: 2020-02
+ * Date: 2020-03-23
  */
 #define USE_COLOR doctest::Color::
 
@@ -47,12 +43,7 @@ TEST_CASE("vertical check") {
 
 TEST_CASE("edge cases") {
     Board board;
-    CHECK_THROWS(board.post(-2,5,Direction::Vertical,"abcd"));
-    CHECK_THROWS(board.post(5,-7,Direction::Vertical,"abcd"));
-    CHECK_THROWS(board.post(-4,-8,Direction::Vertical,"abcd"));
-    CHECK_THROWS(board.post(-2,5,Direction::Horizontal,"abcd"));
-    CHECK_THROWS(board.post(5,-7,Direction::Horizontal,"abcd"));
-    CHECK_THROWS(board.post(-4,-8,Direction::Horizontal,"abcd"));
+
     board.post(0,0,Direction::Horizontal,"achiyazigi");
     CHECK_NOTHROW(board.post(0,0,Direction::Horizontal,""));
     const unsigned short achiyazigi_len = 10;
@@ -62,12 +53,15 @@ TEST_CASE("edge cases") {
 TEST_CASE("new board") {
     Board board;
     string expected;
-    for (int i = 0; i <= 50; i++)
+    size_t expected_len;
+
+    for (uint i = 0; i <= 50; i++)
     {
         expected = string(100,'_');
-        for (int j = 0; j <= 100; j++){
-            expected.resize(100 - j);
-            CHECK(board.read(i,j,Direction::Horizontal, 100 - j) == expected);
+        for (uint j = 0; j <= 100; j++){
+            expected_len = (size_t)(100 - j);
+            expected.resize(expected_len);
+            CHECK(board.read(i,j,Direction::Horizontal, expected_len) == expected);
         }
     }
 }
@@ -77,15 +71,18 @@ TEST_CASE("Horizontal updates on board"){
     bool flip = false;
     string to_post;
     string expected = "01";
+    size_t to_post_len;
+
     for (int i = 0; i < 7; ++i)
     {
         expected += expected;
     }
     expected.resize(200);
 
-    for (int i = 0; i <= 200; i++)
+    for (uint i = 0; i <= 200; i++)
     {
-        to_post = string(200 - i, flip + '0');
+        to_post_len = (size_t)(200 - i);
+        to_post = string(to_post_len, flip + '0');
         board.post(0,i,Direction::Horizontal, to_post);
         flip = !flip;
     }
@@ -98,15 +95,19 @@ TEST_CASE("Vertical updates on board"){
     bool flip = false;
     string to_post;
     string expected = "01";
+    size_t to_post_len;
+
+
     for (int i = 0; i < 7; ++i)
     {
         expected += expected;
     }
     expected.resize(200);
 
-    for (int i = 0; i <= 200; i++)
+    for (uint i = 0; i <= 200; i++)
     {
-        to_post = string(200 - i, flip + '0');
+        to_post_len = (size_t)(200 - i);
+        to_post = string(to_post_len, flip + '0');
         board.post(i,0,Direction::Vertical, to_post);
         flip = !flip;
     }
